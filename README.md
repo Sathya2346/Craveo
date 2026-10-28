@@ -71,104 +71,7 @@ MERN/
 ```
 
 ---
-
-## 3. Quick start
-
-### Prerequisites
-
-- Node.js 20+ (built and tested on 22)
-- XAMPP (MySQL/MariaDB) running locally, or any MySQL 8 / MariaDB 10.4+ server
-
-### 3.0 Run everything (once XAMPP MySQL is started)
-
-```bash
-# terminal 1 - API on :5000
-cd server && npm install && npm run db:reset && npm run dev
-
-# terminal 2 - storefront on :5173
-cd client && npm install && npm run dev
-```
-
-Open <http://localhost:5173>. Stop either with `Ctrl+C`.
-
-### 3.1 API only
-
-```bash
-cd server
-npm install
-cp .env.example .env          # then set DB_* and JWT_SECRET
-npm run db:reset              # creates the schema and seeds demo data
-npm run dev                   # http://localhost:5000
-```
-
-`npm run db:reset` **drops and recreates** every table, then seeds 6 restaurants,
-31 dishes, 5 users, 4 coupons and 5 demo orders. Use `npm run db:migrate` alone if you
-only want the schema.
-
-> **Local database: XAMPP.** Start **Apache + MySQL** from the XAMPP control panel (MySQL must be
-> listening on port **3306**), then run `npm run db:reset`. `server/.env` is already configured for
-> the XAMPP default (`root`, no password):
->
-> ```env
-> DB_HOST=127.0.0.1
-> DB_PORT=3306
-> DB_USER=root
-> DB_PASSWORD=
-> DB_NAME=craveo
-> ```
->
-> Set a XAMPP root password? Put the same value in `DB_PASSWORD`. Prefer phpMyAdmin? Create an empty
-> `craveo` database there (collation `utf8mb4_unicode_ci`) and `npm run db:reset` will fill it.
-
-### 3.2 Client
-
-```bash
-cd client
-npm install
-cp .env.example .env          # leave VITE_API_URL empty for the dev proxy
-npm run dev                   # http://localhost:5173
-```
-
-Vite proxies `/api` and `/uploads` to `http://localhost:5000`, so no CORS setup is needed
-in development.
-
-### Demo accounts
-
-| Role | Email | Password |
-| --- | --- | --- |
-| Admin | `admin@craveo.app` | `Admin@123` |
-| Manager | `manager@craveo.app` | `Manager@123` |
-| Customer | `priya@example.com` | `Customer@123` |
-
-The login page has one-tap buttons to fill these.
-
----
-
-## 4. Environment variables
-
-### `server/.env`
-
-| Variable | Default | Notes |
-| --- | --- | --- |
-| `PORT` | `5000` | API port |
-| `CLIENT_ORIGIN` | `http://localhost:5173` | Comma-separated allowed origins |
-| `DB_HOST` / `DB_PORT` | `127.0.0.1` / `3306` | MySQL host |
-| `DB_USER` / `DB_PASSWORD` | `root` / empty | MySQL credentials |
-| `DB_NAME` | `craveo` | Database name |
-| `DB_NAME_TEST` | `craveo_test` | Used by `npm test` |
-| `JWT_SECRET` | dev fallback | **Required** in production |
-| `JWT_EXPIRES_IN` | `7d` | Token lifetime |
-| `MAX_UPLOAD_MB` | `5` | Image upload cap |
-
-### `client/.env`
-
-| Variable | Notes |
-| --- | --- |
-| `VITE_API_URL` | Full API URL including `/api`, e.g. `https://craveo-api.vercel.app/api`. Empty in dev. |
-
----
-
-## 5. How the important logic works
+## 3. How the important logic works
 
 - **Money is server-authoritative.** The client can post any price it likes; `POST /api/orders`
   re-reads dish prices, applies the restaurant's minimum order, coupon rules, delivery fee,
@@ -189,7 +92,7 @@ The login page has one-tap buttons to fill these.
 
 ---
 
-## 6. API surface
+## 4. API surface
 
 | Group | Endpoints |
 | --- | --- |
@@ -203,31 +106,3 @@ Responses use `{ success, data, meta?, message? }`; errors use
 
 ---
 
-## 7. Tests
-
-```bash
-cd server && npm test        # 65 API edge-case tests (isolated craveo_test DB)
-cd tools  && npm install && node ui-check.mjs   # 36 headless-Chrome UI checks
-```
-
-The UI checker needs the API (`:5000`) and Vite (`:5173`) running. It fails on any browser
-console error and covers desktop + mobile layouts, login, cart, real order placement and every
-admin screen. Results and the bugs these tests caught are in [`TEST_REPORT.md`](./TEST_REPORT.md).
-
----
-
-## 8. Deployment
-
-See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for Vercel (frontend + serverless API), managed MySQL
-setup, environment variables, post-deploy checks and the image-upload caveat on serverless.
-
----
-
-## 9. Known limitations
-
-- Payments are **simulated** (COD/UPI/card status changes only) — no gateway is integrated.
-- Uploads are stored on local disk; on Vercel's ephemeral filesystem you must switch to
-  Cloudinary/S3 or paste external image URLs (steps are in `DEPLOYMENT.md`).
-- JWTs are kept in `localStorage`. httpOnly cookies + CSRF tokens would be stronger against XSS.
-- Rate limiting is in-memory, so it is per-instance (use Redis for multi-instance deployments).
-- No email/SMS notifications, websockets or real rider GPS — the tracker reflects order status.
