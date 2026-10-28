@@ -67,15 +67,41 @@ node -e "console.log(require('bcryptjs').hashSync('YourStrongPassword', 10))"
 
 ---
 
-## Step 1 — Push the repository
+## Step 1 — Push the repository to GitHub
+
+This folder is already a git repo with one commit (`git log` to confirm). Create the remote and
+push:
+
+1. **Create an empty repo** on GitHub — <https://github.com/new> → name it `craveo` → **do not**
+   add a README, `.gitignore` or licence (that would make the push conflict).
+2. **Push** (replace `YOUR-USER`):
+
+   ```bash
+   git remote add origin https://github.com/YOUR-USER/craveo.git
+   git push -u origin main
+   ```
+
+   The first push pops a browser window for GitHub sign-in. If it asks for a password, paste a
+   **Personal Access Token** instead (GitHub → Settings → Developer settings → Tokens (classic) →
+   `repo` scope).
+
+> **Never committed:** `server/.env` and `client/.env` are git-ignored, along with `node_modules`,
+> `dist`, `server/uploads/*` and `.localdb/`. Only the `.env.example` templates go up. Run
+> `git status --short` before pushing if you are unsure.
+
+### Why deploy from Git
+
+Vercel and Render both watch the connected branch: **every `git push` to `main` redeploys
+automatically**, and every pull request gets its own preview URL. That is the whole deployment
+workflow after Step 2 and Step 3:
 
 ```bash
-git add .
-git commit -m "Craveo food delivery app"
-git push origin main
+git add . && git commit -m "your change" && git push
 ```
 
-`server/.env` and `client/.env` are git-ignored. Only `.env.example` files are committed.
+Because the repo holds two apps, both Vercel projects point at the *same* repo with a different
+**Root Directory** (`server` and `client`). A push redeploys both; if you touched only one, cancel
+the other build.
 
 ---
 

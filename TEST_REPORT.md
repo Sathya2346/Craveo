@@ -9,8 +9,9 @@
 | Headless UI smoke (`tools/ui-check.mjs`) | 1 | 36 | 36 pass | ~90 s |
 | Production build (`client`) | — | — | success | ~25 s |
 
-**Environment:** Node 22.13.1 · MariaDB 11.4.5 (MySQL wire-compatible, `mysql2`) · Windows 11 ·
-Chrome headless · Vite 6 · Express 5.
+**Environment:** Node 22.13.1 · XAMPP MariaDB 10.4.32 (MySQL wire-compatible, `mysql2`, port 3306) ·
+Windows 11 · Chrome headless · Vite 6 · Express 5. The full suite was re-run against this XAMPP
+server after the database switch: 65/65 still pass.
 
 ---
 

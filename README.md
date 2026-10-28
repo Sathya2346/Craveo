@@ -79,7 +79,19 @@ MERN/
 - Node.js 20+ (built and tested on 22)
 - XAMPP (MySQL/MariaDB) running locally, or any MySQL 8 / MariaDB 10.4+ server
 
-### 3.1 API
+### 3.0 Run everything (once XAMPP MySQL is started)
+
+```bash
+# terminal 1 - API on :5000
+cd server && npm install && npm run db:reset && npm run dev
+
+# terminal 2 - storefront on :5173
+cd client && npm install && npm run dev
+```
+
+Open <http://localhost:5173>. Stop either with `Ctrl+C`.
+
+### 3.1 API only
 
 ```bash
 cd server
