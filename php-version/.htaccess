@@ -1,0 +1,18 @@
+# Static hosting for the built React app + the PHP API, all from this folder.
+RewriteEngine On
+
+# /api/* -> PHP front controller
+RewriteRule ^api(/.*)?$ api/index.php [QSA,L]
+
+# Block direct access to the raw sources
+RewriteRule ^(api/(src|routes)/|database/|web/src/) - [F,L]
+
+# Existing files (uploads, assets) are served as-is
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# Everything else is a client-side route -> index.html
+RewriteCond %{DOCUMENT_ROOT}/web/dist/index.html -f
+RewriteRule ^ web/dist/index.html [L]
+
+DirectoryIndex web/dist/index.html index.html

@@ -45,6 +45,10 @@ reviews, users and site copy.
 
 Everything above is role-gated: `CUSTOMER` → `MANAGER` → `ADMIN`.
 
+> **Two backends, one product.** `server/` is the Express API used by `client/`. The same frontend
+> and the same MySQL database are also served by a dependency-free PHP 8 API in `php-version/`
+> (`php-version/api` + `php-version/web`) — see [php-version/README.md](php-version/README.md).
+
 ---
 
 ## 2. Project layout
@@ -65,6 +69,7 @@ MERN/
 │   ├── src/services/        pricing, coupons, order workflow
 │   ├── tests/               65 edge-case API tests
 │   └── vercel.json
+├── php-version/             Same app, same database, PHP 8 backend (see php-version/README.md)
 ├── tools/ui-check.mjs       Headless-Chrome UI smoke checks (36 assertions)
 ├── TEST_REPORT.md           Test results, bugs found, known gaps
 └── DEPLOYMENT.md            Step-by-step Vercel deployment

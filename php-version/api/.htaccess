@@ -1,0 +1,14 @@
+# Apache (XAMPP): route every /api/* request through the front controller.
+RewriteEngine On
+
+# Pass the Authorization header through to PHP (CGI/FPM strips it otherwise).
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Real files (uploads) are served directly.
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+RewriteRule ^ index.php [QSA,L]
+
+DirectoryIndex index.php
