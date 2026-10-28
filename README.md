@@ -8,7 +8,7 @@ reviews, users and site copy.
 - **Frontend:** React 18 + Vite, Framer Motion, Recharts, hand-written responsive CSS
 - **Backend:** Node.js + Express 5, JWT auth with roles, Zod validation
 - **Database:** MySQL 8 / MariaDB 10.4+ (`mysql2`, no ORM — plain SQL with parameterised queries)
-- **Uploads:** Multer (local disk by default, see `DEPLOYMENT.md` for the serverless caveat)
+- **Uploads:** Multer to local disk (ephemeral on serverless hosts — use image URLs there)
 
 ---
 
@@ -70,9 +70,7 @@ MERN/
 │   ├── tests/               65 edge-case API tests
 │   └── vercel.json
 ├── php-version/             Same app, same database, PHP 8 backend (see php-version/README.md)
-├── tools/ui-check.mjs       Headless-Chrome UI smoke checks (36 assertions)
-├── TEST_REPORT.md           Test results, bugs found, known gaps
-└── DEPLOYMENT.md            Step-by-step Vercel deployment
+└── tools/ui-check.mjs       Headless-Chrome UI smoke checks (36 assertions)
 ```
 
 ---
