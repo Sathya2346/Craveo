@@ -39,7 +39,7 @@ export const env = {
   jwtSecret: process.env.JWT_SECRET || DEV_SECRET,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   maxUploadBytes: Number(process.env.MAX_UPLOAD_MB || 5) * 1024 * 1024,
-  uploadsDir: path.join(serverRoot, 'uploads'),
+  uploadsDir: process.env.VERCEL ? '/tmp/craveo-uploads': path.join(serverRoot, 'uploads'),
 };
 
 export const usingFallbackSecret = !process.env.JWT_SECRET;
