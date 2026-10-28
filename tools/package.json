@@ -1,0 +1,12 @@
+{
+  "name": "craveo-ui-check",
+  "private": true,
+  "type": "module",
+  "description": "Headless Chrome smoke checks for the Craveo storefront and admin panel",
+  "scripts": {
+    "check": "node ui-check.mjs"
+  },
+  "dependencies": {
+    "puppeteer-core": "^23.11.1"
+  }
+}
